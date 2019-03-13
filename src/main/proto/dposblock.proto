@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package org.brewchain.dposblk.pbgens;
+package org.fok.dpos.model;
 
 enum PModule {
 	DOB = 0;
@@ -29,6 +29,7 @@ enum PCommand {
 	QDT = 11; //查询当前Term
 		
 	TTT = 30;//ping,pong,wall ,testing
+	RHR = 31;//checkhealthy
 };
 
 enum DNodeState{
@@ -59,6 +60,8 @@ message PDNode{
 	string		term_sign = 20;
 	int32		cominer_start_block = 21;
 	string		last_term_sign = 22;
+	string		cur_block_hash = 23;//当前blockhash
+	
 }
 
 message PSCoMine{//加入
@@ -227,6 +230,7 @@ message PSSyncBlocks{
 	repeated int32 block_idx = 4;//byids
 	string 	bcuid = 10;//节点
 	string message_id = 30;
+	bool needBody = 5;
 }
 
 message PRetSyncBlocks{
@@ -258,11 +262,33 @@ message PRetSyncTransaction {
 }
 
 message PSGetTransaction {
-	repeated string txHash = 1;
+	repeated bytes txHash = 1;
 }
 
 message PRetGetTransaction {
 	int32 ret_code = 1;
 	string ret_message = 2;
 	repeated bytes txContent = 3;	
+}
+
+
+
+message PSRhrCheck{//心跳检查
+	string reqinfo = 1;
+}
+
+message PRetRhrCheck{//加入的返回信息
+	int32 ret_code = 1;//返回
+	string ret_message = 2;//返回信息
+	int64	blockheight = 3;
+	int64	termid = 4;
+	int64 	lastblocktime = 5;
+	int64	maxblockheightseen = 6;//
+	int64	maxtermidseedn = 7;
+	string 	termuid = 8;
+	string	blockhash = 9;
+	string	coaddr = 10;
+	string	status = 11;//'Pending,cominer...'
+	int64	timepasslastblk = 12;	
+	int32	banforvote = 13;
 }
