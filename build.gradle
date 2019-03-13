@@ -6,32 +6,53 @@ buildscript {
 	  }
 	dependencies { 
 		classpath "onight.osgi:zpp-gradle:3.2.0"
+		classpath ("net.sf.ehcache:ehcache:2.10.5")
 	 }
 }
-version = '3.0.0'
+version = '0.0.1'
 
 repositories{
 	maven{ url "http://dl.bintray.com/ethereum/maven/"}
 }
  
  
-project.group='org.brewchain'
+project.group='org.fok'
+//project.name='dpos'
 
 apply plugin: 'zippo'
 
 dependencies {
 	//	 testCompile 'junit:junit:4.12'
 	compile ("org.fc.zippo:org.fc.zippo.oapi:3.3.2")
-	compile ("org.brewchain:org.brewchain.bcapi:3.3.4")
-	compile ("org.brewchain:org.brewchain.p22p:3.0.0")
-	compile ("org.brewchain:org.brewchain.raftnet:3.0.0")
 	
-	compile ("org.brewchain:org.brewchain.account:1.0.5")
-	compile ("org.brewchain:org.brewchain.evmapi:1.0.0")
+	
+	compile ("org.fok:org.fok.p22p:0.0.1")
+	// compile ("org.fok:org.fok.raft:0.0.1")
+	compile ("org.fok:org.fok.core:0.0.1")
+	compile ("org.fok:org.fok.tools:0.0.1")
+	compile ("org.fok:org.fok.model:0.0.1")
+	includeInJar("net.sf.ehcache:ehcache:2.10.5")
+}
+
+protobuf {
+    generatedFilesBaseDir = "$projectDir/src"
+    generateProtoTasks {
+	  ofSourceSet('main')
+	}
+}
+sourceSets {
+  main {
+    proto {
+      srcDir '$projectDir/src/main/proto'
+    }
+    java {
+      srcDir '$projectDir/src/main/java'
+    }
+  }
 }
 
 jar {
 	manifest{
-		attributes( 'Import-Ignore':'')
+		attributes( 'Import-Ignore':'org.bouncycastle,net.sf.ehcache')
 	}
 }
