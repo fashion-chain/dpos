@@ -48,11 +48,7 @@ public class PendingQueue<T> {
 	public void addLast(T hp) {
 		addElement(hp);
 	}
-
-	public int size() {
-		return (int) (counter.ptr_pending.get() - counter.ptr_sending.get());
-	}
-
+	
 	public T pollFirst() {
 		List<T> ret = poll(1);
 
@@ -62,6 +58,12 @@ public class PendingQueue<T> {
 
 		return null;
 	}
+
+	public int size() {
+		return (int) (counter.ptr_pending.get() - counter.ptr_sending.get());
+	}
+
+	
 
 	public synchronized List<T> poll(int size) {
 		List<T> ret = new ArrayList<>();

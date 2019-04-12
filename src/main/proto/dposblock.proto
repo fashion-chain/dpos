@@ -41,6 +41,13 @@ enum DNodeState{
 	
 }
 
+
+
+message PSCoMine{//加入
+	PDNode  dn = 1;
+	string message_id = 30;
+}
+
 message PDNode{
 	string 		bcuid = 1;//节点
 	string 		co_address = 2;//拥有合约cws的地址
@@ -62,11 +69,6 @@ message PDNode{
 	string		last_term_sign = 22;
 	string		cur_block_hash = 23;//当前blockhash
 	
-}
-
-message PSCoMine{//加入
-	PDNode  dn = 1;
-	string message_id = 30;
 }
 
 message PRetCoMine{//加入的返回信息
